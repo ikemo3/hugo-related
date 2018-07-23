@@ -1,12 +1,11 @@
 {{- $name := .File.TranslationBaseName -}}
 {{- $sectionTop := $.Site.GetPage "section" .Section }}
-{{- if $sectionTop.Params.inverted }}
-  {{- $inverted := $sectionTop.Params.inverted }}
-  {{- range $inverted }}
+{{- with $sectionTop.Params.inverted }}
+  {{- range . }}
     {{- $sectionName := . }}
-    {{- $sectionPage := $.Site.GetPage "section" . }}
-    {{- $matchedPages := (where (where $.Site.RegularPages "Params.tags" "intersect" (slice $name)) "Section" $sectionName) }}
+    {{- $sectionPage := $.Site.GetPage "section" $sectionName }}
 
+    {{- $matchedPages := (where (where $.Site.RegularPages "Params.tags" "intersect" (slice $name)) "Section" $sectionName) }}
     {{- with $matchedPages }}
     <h2 id="partials-inverted" data-title="{{ $sectionPage.Title }}">{{ $sectionPage.Title }}</h2>
     <ul>
