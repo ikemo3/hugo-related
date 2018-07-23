@@ -1,0 +1,8 @@
+<!-- セクション名もしくはタクソノミ名 -->
+{{- if (eq .Kind "taxonomy") -}}
+  {{- $taxonomyPage := .Site.GetPage "taxonomy" .Data.Plural -}}
+  {{- (print $taxonomyPage.Title ": ") -}}
+{{- else if (ne .Section "") -}}
+  {{- $sectionPage := .Site.GetPage "section" .Section -}}
+  {{- (print $sectionPage.Title ": ") -}}
+{{- end -}}

@@ -1,0 +1,27 @@
+<!--
+  ページのタイトルを取得する。
+
+  * タグページが渡された場合
+    * dic/manualセクションに同じページがあるときは、そのタイトルを返す。
+    * dic/manualセクションにない場合は、ページのタイトルを返す。
+ -->
+{{- if (eq .Kind "taxonomy") -}}
+  <!-- タグ名を取得 -->
+  {{- $tagName := .Data.Term -}}
+
+  <!-- 辞書ページを取得 -->
+  {{- $dicPage := .Site.GetPage "page" "dic" (print $tagName ".md") -}}
+
+  <!-- マニュアルページを取得 -->
+  {{- $manPage := .Site.GetPage "page" "manual" (print $tagName ".md") -}}
+
+  {{- if $dicPage -}}
+    {{- $dicPage.Title -}}
+  {{- else if $manPage -}}
+    {{- $manPage.Title -}}
+  {{- else -}}
+    {{- .Title -}}
+  {{- end -}}
+{{- else -}}
+  {{- .Title -}}
+{{- end -}}
