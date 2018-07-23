@@ -1,0 +1,19 @@
+{{ $sectionTop := $.Site.GetPage "section" .Section }}
+{{- if $sectionTop.Params.tagref }}
+  {{- $tagrefs := $sectionTop.Params.tagref }}
+  {{- range $tagrefs }}
+    {{ $tagref := . }}
+    {{- $refTop := $.Site.GetPage "section" . }}
+    <h2>{{ $refTop.Title }}</h2>
+    <ul>
+    {{- range $.Params.tags }}
+      {{- $manualPage := $.Site.GetPage "page" $tagref (print . ".md") }}
+      {{- if $manualPage }}
+        <li><a href="{{ $manualPage.URL }}">{{ $manualPage.Title }}</a></li>
+      {{- else }}
+        <li>{{ . }}: まだありません。</li>
+      {{- end }}
+    {{- end }}
+    </ul>
+  {{- end }}
+{{- end -}}

@@ -1,0 +1,19 @@
+{{- $name := .File.TranslationBaseName -}}
+{{- $sectionTop := $.Site.GetPage "section" .Section }}
+{{- if $sectionTop.Params.inverted }}
+  {{- $inverted := $sectionTop.Params.inverted }}
+  {{- range $inverted }}
+    {{- $sectionName := . }}
+    {{- $sectionPage := $.Site.GetPage "section" . }}
+    {{- $matchedPages := (where (where $.Site.RegularPages "Params.tags" "intersect" (slice $name)) "Section" $sectionName) }}
+
+    {{- with $matchedPages }}
+    <h2 id="partials-inverted" data-title="{{ $sectionPage.Title }}">{{ $sectionPage.Title }}</h2>
+    <ul>
+      {{- range $matchedPages }}
+        <li><a href="{{ .URL }}">{{ .Title }}</a></li>
+      {{- end }}
+    </ul>
+    {{- end }}
+  {{- end }}
+{{- end }}

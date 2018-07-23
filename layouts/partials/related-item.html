@@ -1,0 +1,60 @@
+{{- $site := .Site -}}
+
+<!-- e.g. "/dic/ansible/" -->
+{{- $page := .Page -}}
+
+<!-- e.g. "/dic/ansible/" to "dic" -->
+{{- $pageSection := .Section -}}
+
+<!-- e.g. "/dic/ansible/" to "ansible.md" -->
+{{- $pagePath := replaceRE "^[^/]+/" "" .Path }}
+
+<!-- e.g. "ansible.md" to "ansible" -->
+{{- $pageName := replaceRE "\\.md$" "" $pagePath }}
+
+<!-- セクションが異なるもので同じパスを持つものを取得 -->
+{{- range $sectionTop := $site.Sections }}
+  {{- $section := $sectionTop.Section }}
+  {{- if (ne $section $pageSection) }}
+    {{- $sectionPage := $site.GetPage "page" $section $pagePath }}
+    {{- with $sectionPage }}
+      {{- $sectionName := partialCached "function/section-name" . .URL }}
+      {{- $page.Scratch.Add "related" (slice (dict "Title" (print $sectionName .Title) "URL" .URL ) ) }}
+    {{- end }}
+  {{- end }}
+{{- end -}}
+
+<!-- Taxonomyが異なるもので同じパスを持つものを取得 -->
+{{- range $taxonomyName, $taxonomy := $site.Taxonomies }}
+  {{- $taxonomyPage := $site.GetPage "taxonomy" $taxonomyName $pageName }}
+  {{- with $taxonomyPage }}
+    {{- $title := partialCached "function/page-title-with-section" . .URL }}
+    {{- $page.Scratch.Add "related" (slice (dict "Title" $title "URL" .URL )) }}
+  {{- end }}
+{{- end -}}
+
+<!-- relatedの内容を取得 -->
+{{- range .Params.related -}} 
+  <!-- パスの変換。例: /dic/fedora/ →dic/fedora.md -->
+  {{- $relatedPath := replaceRE "^/(.*)/$" "$1.md" . }}
+  {{- $relatedPage := $site.GetPage "page" $relatedPath }}
+  {{- if $relatedPage }}
+    {{- with $relatedPage }}
+      {{- $sectionTopPage := $site.GetPage "section" .Section }}
+      {{- $sectionName := partialCached "function/section-name" . .URL }}
+      {{- $page.Scratch.Add "related" (slice (dict "Title" (print $sectionName .Title) "URL" .URL ) ) }}
+    {{- end }}
+  {{- else }}
+    {{- errorf "関連ページが存在しません。%s: %s" $page.File.Path . }}
+  {{- end }}
+{{- end -}}
+
+<!-- 関連項目がある場合に表示 -->
+{{- if $page.Scratch.Get "related" }}
+<h2 id="partials-related">関連項目</h2>
+<ul>
+  {{- range $page.Scratch.Get "related" }}
+  <li><a href="{{ .URL }}">{{ .Title }}</a></li>
+  {{- end }}
+</ul>
+{{- end -}}
