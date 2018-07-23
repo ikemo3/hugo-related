@@ -1,8 +1,7 @@
 {{ $sectionTop := $.Site.GetPage "section" .Section }}
-{{- if $sectionTop.Params.tagref }}
-  {{- $tagrefs := $sectionTop.Params.tagref }}
-  {{- range $tagrefs }}
-    {{ $tagref := . }}
+{{- with $sectionTop.Params.tagref }}
+  {{- range . }}
+    {{- $tagref := . }}
     {{- $refTop := $.Site.GetPage "section" . }}
     <h2>{{ $refTop.Title }}</h2>
     <ul>
