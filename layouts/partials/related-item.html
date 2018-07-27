@@ -16,7 +16,7 @@
 {{- range $sectionTop := $site.Sections }}
   {{- $section := $sectionTop.Section }}
   {{- if (ne $section $pageSection) }}
-    {{- $sectionPage := $site.GetPage "page" $section $pagePath }}
+    {{- $sectionPage := $site.GetPage "page" (print $section "/" $pagePath) }}
     {{- with $sectionPage }}
       {{- $sectionName := partialCached "function/hugo-related/section-name" . .URL }}
       {{- $page.Scratch.Add "related" (slice (dict "Title" (print $sectionName .Title) "URL" .URL ) ) }}
@@ -26,7 +26,7 @@
 
 <!-- Taxonomyが異なるもので同じパスを持つものを取得 -->
 {{- range $taxonomyName, $taxonomy := $site.Taxonomies }}
-  {{- $taxonomyPage := $site.GetPage "taxonomy" $taxonomyName $pageName }}
+  {{- $taxonomyPage := $site.GetPage "taxonomy" (print $taxonomyName "/" $pageName) }}
   {{- with $taxonomyPage }}
     {{- $title := partialCached "function/hugo-related/page-title-with-section" . .URL }}
     {{- $page.Scratch.Add "related" (slice (dict "Title" $title "URL" .URL )) }}

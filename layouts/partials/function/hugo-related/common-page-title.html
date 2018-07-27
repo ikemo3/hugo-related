@@ -10,10 +10,10 @@
   {{- $tagName := .Data.Term -}}
 
   <!-- 辞書ページを取得 -->
-  {{- $dicPage := .Site.GetPage "page" "dic" (print $tagName ".md") -}}
+  {{- $dicPage := .Site.GetPage "page" (print "dic/" $tagName ".md") -}}
 
   <!-- マニュアルページを取得 -->
-  {{- $manPage := .Site.GetPage "page" "manual" (print $tagName ".md") -}}
+  {{- $manPage := .Site.GetPage "page" (print "manual/" $tagName ".md") -}}
 
   {{- if $dicPage -}}
     {{- $dicPage.Title -}}

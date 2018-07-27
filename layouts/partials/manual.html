@@ -6,7 +6,7 @@
     <h2>{{ $refTop.Title }}</h2>
     <ul>
     {{- range $.Params.tags }}
-      {{- $manualPage := $.Site.GetPage "page" $tagref (print . ".md") }}
+      {{- $manualPage := $.Site.GetPage "page" (print $tagref "/" . ".md") }}
       {{- if $manualPage }}
         <li><a href="{{ $manualPage.URL }}">{{ $manualPage.Title }}</a></li>
       {{- else }}
