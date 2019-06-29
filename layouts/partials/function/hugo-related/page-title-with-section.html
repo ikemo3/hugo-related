@@ -1,4 +1,4 @@
 <!-- ページのタイトルを取得 -->
 {{- partial "function/hugo-related/draft" . -}}
-{{- partialCached "function/hugo-related/section-name" . .URL -}}
-{{- partialCached "function/hugo-related/common-page-title" . .URL -}}
+{{- partialCached "function/hugo-related/section-name" . .RelPermalink -}}
+{{- partialCached "function/hugo-related/common-page-title" . .RelPermalink -}}

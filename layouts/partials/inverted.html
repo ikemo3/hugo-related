@@ -10,7 +10,7 @@
     <h2 id="partials-inverted" data-title="{{ $sectionPage.Title }}">{{ $sectionPage.Title }}</h2>
     <ul>
       {{- range $matchedPages }}
-        <li><a href="{{ .URL }}">{{ .Title }}</a></li>
+        <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
       {{- end }}
     </ul>
     {{- end }}
