@@ -18,8 +18,8 @@
   {{- if (ne $section $pageSection) }}
     {{- $sectionPage := $site.GetPage "page" (print $section "/" $pagePath) }}
     {{- with $sectionPage }}
-      {{- $sectionName := partialCached "function/hugo-related/section-name" . .URL }}
-      {{- $page.Scratch.Add "related" (slice (dict "Title" (print $sectionName .Title) "URL" .URL ) ) }}
+      {{- $sectionName := partialCached "function/hugo-related/section-name" . .RelPermalink }}
+      {{- $page.Scratch.Add "related" (slice (dict "Title" (print $sectionName .Title) "URL" .RelPermalink ) ) }}
     {{- end }}
   {{- end }}
 {{- end -}}
@@ -28,8 +28,8 @@
 {{- range $taxonomyName, $taxonomy := $site.Taxonomies }}
   {{- $taxonomyPage := $site.GetPage "taxonomy" (print $taxonomyName "/" $pageName) }}
   {{- with $taxonomyPage }}
-    {{- $title := partialCached "function/hugo-related/page-title-with-section" . .URL }}
-    {{- $page.Scratch.Add "related" (slice (dict "Title" $title "URL" .URL )) }}
+    {{- $title := partialCached "function/hugo-related/page-title-with-section" . .RelPermalink }}
+    {{- $page.Scratch.Add "related" (slice (dict "Title" $title "URL" .RelPermalink )) }}
   {{- end }}
 {{- end -}}
 
@@ -41,8 +41,8 @@
   {{- if $relatedPage }}
     {{- with $relatedPage }}
       {{- $sectionTopPage := $site.GetPage "section" .Section }}
-      {{- $sectionName := partialCached "function/hugo-related/section-name" . .URL }}
-      {{- $page.Scratch.Add "related" (slice (dict "Title" (print $sectionName .Title) "URL" .URL ) ) }}
+      {{- $sectionName := partialCached "function/hugo-related/section-name" . .RelPermalink }}
+      {{- $page.Scratch.Add "related" (slice (dict "Title" (print $sectionName .Title) "URL" .RelPermalink ) ) }}
     {{- end }}
   {{- else }}
     {{- errorf "関連ページが存在しません。%s: %s" $page.File.Path . }}

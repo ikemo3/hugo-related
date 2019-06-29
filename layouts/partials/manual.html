@@ -8,7 +8,7 @@
     {{- range $.Params.tags }}
       {{- $manualPage := $.Site.GetPage "page" (print $tagref "/" . ".md") }}
       {{- if $manualPage }}
-        <li><a href="{{ $manualPage.URL }}">{{ $manualPage.Title }}</a></li>
+        <li><a href="{{ $manualPage.RelPermalink }}">{{ $manualPage.Title }}</a></li>
       {{- else }}
         <li>{{ . }}: まだありません。</li>
       {{- end }}
