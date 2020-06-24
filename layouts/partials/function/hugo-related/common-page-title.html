@@ -5,7 +5,7 @@
     * dic/manualセクションに同じページがあるときは、そのタイトルを返す。
     * dic/manualセクションにない場合は、ページのタイトルを返す。
  -->
-{{- if (eq .Kind "taxonomy") -}}
+{{- if (eq .Kind "term") -}}
   <!-- タグ名を取得 -->
   {{- $tagName := .Data.Term -}}
 
