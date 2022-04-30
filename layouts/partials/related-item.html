@@ -7,7 +7,7 @@
 {{- $pageSection := .Section -}}
 
 <!-- e.g. "/dic/ansible/" to "ansible.md" -->
-{{- $pagePath := replaceRE "^[^/]+/" "" .Path }}
+{{- $pagePath := replaceRE "^[^/]+/" "" .File.Path }}
 
 <!-- e.g. "ansible.md" to "ansible" -->
 {{- $pageName := replaceRE "\\.md$" "" $pagePath }}
